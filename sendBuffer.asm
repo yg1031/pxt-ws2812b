@@ -228,6 +228,49 @@ sendBufferAsm:
     tst r6, r0          ;            C3
     bne .islate         ;            C4
     str r1, [r2, #0]    ; pin := lo  C6      
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
 .islate:
     lsrs r6, r6, #1     ; r6 >>= 1   C7
     bne .justbit        ;            C8
