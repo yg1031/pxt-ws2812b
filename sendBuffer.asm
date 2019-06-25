@@ -285,16 +285,6 @@ sendBufferAsm:
 
 .common:               ;             C13
     str r1, [r2, #0]   ; pin := lo   C15
-    ; always re-load byte - it just fits with the cycles better this way
-    ldrb r0, [r4, #0]  ; r0 := *r4   C17
-    b .nextbit         ;             C20
-
-.justbit: ; C10
-    ; no nops, branch taken is already 3 cycles
-    b .common ; C13
-
-.stop:    
-    str r1, [r2, #0]   ; pin := lo
     nop
     nop
     nop
@@ -338,6 +328,16 @@ sendBufferAsm:
     nop
     nop
     nop    
+    ; always re-load byte - it just fits with the cycles better this way
+    ldrb r0, [r4, #0]  ; r0 := *r4   C17
+    b .nextbit         ;             C20
+
+.justbit: ; C10
+    ; no nops, branch taken is already 3 cycles
+    b .common ; C13
+
+.stop:    
+    str r1, [r2, #0]   ; pin := lo   
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
