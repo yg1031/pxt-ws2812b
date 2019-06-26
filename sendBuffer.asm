@@ -33,7 +33,7 @@ sendBufferAsm:
     
 .nextbit:               ;            C0
     str r1, [r3, #0]    ; pin := hi  C2
-    nop                 ; add 100 nop, about 6.25us    
+    nop                 ; add 100 nop about 6.25us    
     nop
     nop
     nop
@@ -149,7 +149,7 @@ sendBufferAsm:
     nop                 ;            C13
 
 .common:               ;             C13
-    nop                ; add 50 nop, about 3.125us    
+    nop                ; add 50 nop about 3.125us    
     nop
     nop
     nop
@@ -200,7 +200,7 @@ sendBufferAsm:
     nop
     nop
     str r1, [r2, #0]   ; pin := lo   C15
-    nop                ; add 100 nop, about 6.25us    
+    nop                ; add 100 nop about 6.25us    
     nop
     nop
     nop
@@ -313,3 +313,5 @@ sendBufferAsm:
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
+
+
