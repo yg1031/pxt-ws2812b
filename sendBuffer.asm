@@ -33,7 +33,7 @@ sendBufferAsm:
     
 .nextbit:               ;            C0
     str r1, [r3, #0]    ; pin := hi  C2
-    nop    
+    nop                 ; add 100 nop, about 6.25us    
     nop
     nop
     nop
@@ -129,122 +129,6 @@ sendBufferAsm:
     nop
     nop
     nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop 
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
     nop
     nop
     nop
@@ -265,7 +149,83 @@ sendBufferAsm:
     nop                 ;            C13
 
 .common:               ;             C13
+    nop                ; add 50 nop, about 3.125us    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop 
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
     str r1, [r2, #0]   ; pin := lo   C15
+    nop                ; add 100 nop, about 6.25us    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop 
     nop    
     nop
     nop
@@ -292,19 +252,6 @@ sendBufferAsm:
     nop
     nop
     nop
-    nop
-    nop
-    nop
-    nop
-    nop    
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop   
     nop    
     nop
     nop
@@ -328,8 +275,13 @@ sendBufferAsm:
     nop    
     nop
     nop
+    nop    
     nop
     nop
+    nop
+    nop
+    nop
+    nop    
     nop
     nop
     nop
@@ -343,7 +295,11 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
+    nop
+    nop
+    nop 
     ; always re-load byte - it just fits with the cycles better this way
     ldrb r0, [r4, #0]  ; r0 := *r4   C17
     b .nextbit         ;             C20
@@ -357,5 +313,3 @@ sendBufferAsm:
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
-
-
