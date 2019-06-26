@@ -138,6 +138,56 @@ sendBufferAsm:
     str r1, [r2, #0]    ; pin := lo  C6    
 .islate:
     lsrs r6, r6, #1     ; r6 >>= 1   C7
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
     bne .justbit        ;            C8
     
     ; not just a bit - need new byte
