@@ -33,16 +33,19 @@ sendBufferAsm:
     
 .nextbit:               ;            C0
     str r1, [r3, #0]    ; pin := hi  C2
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -50,20 +53,25 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
+    nop 
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -71,21 +79,25 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -93,18 +105,22 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -112,27 +128,127 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop 
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
     tst r6, r0          ;            C3
     bne .islate         ;            C4
     str r1, [r2, #0]    ; pin := lo  C6    
@@ -150,16 +266,19 @@ sendBufferAsm:
 
 .common:               ;             C13
     str r1, [r2, #0]   ; pin := lo   C15
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -167,6 +286,7 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -176,6 +296,7 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -183,16 +304,20 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop   
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -200,6 +325,7 @@ sendBufferAsm:
     nop
     nop
     nop
+    nop    
     nop
     nop
     nop
@@ -209,39 +335,7 @@ sendBufferAsm:
     nop
     nop
     nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+    nop    
     nop
     nop
     nop
@@ -255,56 +349,6 @@ sendBufferAsm:
     b .nextbit         ;             C20
 
 .justbit: ; C10
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
     ; no nops, branch taken is already 3 cycles
     b .common ; C13
 
