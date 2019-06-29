@@ -33,21 +33,30 @@ sendBufferAsm:
     
 .nextbit:               ;            C0
     str r1, [r3, #0]    ; pin := hi  C2
-    mov r7, #0
+    movs r7, #0
+    b. delaya
+
 .delaya:
-    add r7, #1
+    adds r7, #1
     cmp r7, #50
     bne .delaya
+    b .goa
+
 .goa:
     tst r6, r0          ;            C3
     bne .islate         ;            C4
-    str r1, [r2, #0]    ; pin := lo  C6    
+    str r1, [r2, #0]    ; pin := lo  C6
+    
 .islate:
-    mov r7, #0
+    movs r7, #0
+    b .delayb
+    
 .delayb:
-    add r7, #1
+    adds r7, #1
     cmp r7, #50
     bne .delayb
+    b .gob
+    
 .gob:
     lsrs r6, r6, #1     ; r6 >>= 1   C7
     bne .justbit        ;            C8
@@ -62,11 +71,15 @@ sendBufferAsm:
 
 .common:               ;             C13
     str r1, [r2, #0]   ; pin := lo   C15
-    mov r7, #0
+    movs r7, #0
+    b .delayc
+
 .delayc:
-    add r7, #1
+    adds r7, #1
     cmp r7, #50
     bne .delayc
+    b .goc
+
 .goc:
     ; always re-load byte - it just fits with the cycles better this way
     ldrb r0, [r4, #0]  ; r0 := *r4   C17
