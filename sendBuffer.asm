@@ -232,7 +232,7 @@ sendBufferAsm:
     nop
     nop
     nop
-    nop    
+    nop
     tst r6, r0          ;            C3
     bne .islate         ;            C4
     str r1, [r2, #0]    ; pin := lo  C6    
@@ -437,7 +437,7 @@ sendBufferAsm:
     nop
     nop
     nop
-    nop    
+    nop
     bne .justbit        ;            C8
     
     ; not just a bit - need new byte
@@ -649,7 +649,7 @@ sendBufferAsm:
     nop
     nop
     nop
-    nop    
+    nop
     ; always re-load byte - it just fits with the cycles better this way
     ldrb r0, [r4, #0]  ; r0 := *r4   C17
     b .nextbit         ;             C20
