@@ -34,10 +34,13 @@ sendBufferAsm:
 .nextbit:               ;            C0
     str r1, [r3, #0]    ; pin := hi  C2
     movs r7, #0
-    b. delaya
+    b .delaya
 
 .delaya:
     adds r7, #1
+    cmp r7, #50
+    bne .delaya
+    b .goa
 
 .goa:
     tst r6, r0          ;            C3
@@ -50,6 +53,9 @@ sendBufferAsm:
     
 .delayb:
     adds r7, #1
+    cmp r7, #50
+    bne .delayb
+    b .gob
     
 .gob:
     lsrs r6, r6, #1     ; r6 >>= 1   C7
@@ -70,6 +76,9 @@ sendBufferAsm:
 
 .delayc:
     adds r7, #1
+    cmp r7, #50
+    bne .delayc
+    b .goc
 
 .goc:
     ; always re-load byte - it just fits with the cycles better this way
