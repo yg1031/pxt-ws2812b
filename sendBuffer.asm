@@ -1,25 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@yg1031 
- Watch 6
- Star 3  Fork 6 microsoft/pxt-ws2812b
- Code  Issues 1  Pull requests 0  Security  Insights
-Branch: master 
-pxt-ws2812b/sendBuffer.asm
-Find file Copy path
-@pelikhan pelikhan initial push
-714cb8b on 28 Feb 2018
-1 contributor
-68 lines (50 sloc)  1.57 KB
-RawBlameHistory
-    
 sendBufferAsm:
 
     push {r4,r5,r6,r7,lr}
@@ -50,21 +28,22 @@ sendBufferAsm:
     ldr r3, [r0, #12] ; r3-setaddr
     
     cpsid i ; disable irq
-    
-    b .loop
 
-.loop:    
-    ldrb r0, [r4, #0]  ; r0 := *r4   C17
-    movs r6, #0        ; r6 = 0
-    and r6, r0, #0xf0  ; r6 = r0 & 0xf0
-    lsls r6, r6, #1    ; r6 <<= 1
+    b .sendbyte
+
+.sendbyte:
+    ldrb r0, [r4, #0]
+    movs r6, r0
+    movs r7, #0xF0
+    ands r6, r7
+    lsls r6, r6, #1
     movs r7, #0
-    str r1, [r3, #0]   ; pin := hi
+    str r1, [r3, #0]
     b .delayhigh1
     
 .delayhigh1:
     adds r7, #1
-    cmp r7, r6         ;
+    cmp r7, r6
     bne .delayhigh1
     b .lowbits
 
@@ -75,8 +54,9 @@ sendBufferAsm:
     nop
     nop
     nop
-    movs r6, #0        ; r6 = 0
-    and r6, r0, #0x0f  ; r6 = r0 & 0x0f
+    movs r6, r0
+    movs r7, #0x0F
+    ands r6, r7
     lsls r6, r6, #1    ; r6 <<= 1
     movs r7, #0
     str r1, [r3, #0]   ; pin := hi
@@ -95,7 +75,7 @@ sendBufferAsm:
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
-    b .loop
+    b .sendbyte
 
 .stop:    
     str r1, [r2, #0]   ; pin := lo
