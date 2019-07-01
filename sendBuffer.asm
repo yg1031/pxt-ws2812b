@@ -37,6 +37,7 @@ sendBufferAsm:
     movs r7, #0xF0
     ands r6, r7
     lsrs r6, r6, #3
+    adds r6, #10
     movs r7, #0
     str r1, [r3, #0]
     b .delayhigh1
@@ -63,6 +64,7 @@ sendBufferAsm:
     movs r7, #0x0F
     ands r6, r7
     lsls r6, r6, #1    ; r6 <<= 1
+    adds r6, #10
     movs r7, #0
     str r1, [r3, #0]   ; pin := hi
     b .delayhigh2
