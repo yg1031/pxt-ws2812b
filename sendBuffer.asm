@@ -36,7 +36,7 @@ sendBufferAsm:
     movs r6, r0
     movs r7, #0xF0
     ands r6, r7
-    lsls r6, r6, #1
+    lsrs r6, r6, #3
     movs r7, #0
     str r1, [r3, #0]
     b .delayhigh1
@@ -45,15 +45,20 @@ sendBufferAsm:
     adds r7, #1
     cmp r7, r6
     bne .delayhigh1
-    b .lowbits
+    b .outputlow
 
-.lowbits:
+.outputlow:
     str r1, [r2, #0]    ; pin := lo  C6
-    nop
-    nop
-    nop
-    nop
-    nop
+    movs r7, #0
+    b .delaylow1
+
+.delaylow1:
+    adds r7, #1
+    cmp r7, #10
+    bne .delaylow1
+    b .lowbits
+    
+.lowbits:
     movs r6, r0
     movs r7, #0x0F
     ands r6, r7
@@ -67,11 +72,16 @@ sendBufferAsm:
     cmp r7, r6         ;
     bne .delayhigh2
     str r1, [r2, #0]    ; pin := lo  C6
-    nop
-    nop
-    nop
-    nop
-    nop    
+    movs r7, #0
+    b .delaylow2
+
+.delaylow2:
+    adds r7, #1
+    cmp r7, #10
+    bne .delaylow2
+    b .nextbyte
+
+.nextbyte:    
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
