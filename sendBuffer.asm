@@ -1,3 +1,25 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@yg1031 
+ Watch 6
+ Star 3  Fork 6 microsoft/pxt-ws2812b
+ Code  Issues 1  Pull requests 0  Security  Insights
+Branch: master 
+pxt-ws2812b/sendBuffer.asm
+Find file Copy path
+@pelikhan pelikhan initial push
+714cb8b on 28 Feb 2018
+1 contributor
+68 lines (50 sloc)  1.57 KB
+RawBlameHistory
+    
 sendBufferAsm:
 
     push {r4,r5,r6,r7,lr}
@@ -29,70 +51,54 @@ sendBufferAsm:
     
     cpsid i ; disable irq
     
-    b .start
-    
-.nextbit:               ;            C0
-    str r1, [r3, #0]    ; pin := hi  C2
+    b .loop
+
+.loop:    
+    ldrb r0, [r4, #0]  ; r0 := *r4   C17
+    movs r6, #0        ; r6 = 0
+    and r6, r0, #0xf0  ; r6 = r0 & 0xf0
+    lsls r6, r6, #1    ; r6 <<= 1
     movs r7, #0
-    b .delaya
-
-.delaya:
+    str r1, [r3, #0]   ; pin := hi
+    b .delayhigh1
+    
+.delayhigh1:
     adds r7, #1
-    cmp r7, #8         ; 2.4us
-    bne .delaya
-    b .goa
+    cmp r7, r6         ;
+    bne .delayhigh1
+    b .lowbits
 
-.goa:
-    tst r6, r0          ;            C3
-    bne .islate         ;            C4
+.lowbits:
     str r1, [r2, #0]    ; pin := lo  C6
-    
-.islate:
+    nop
+    nop
+    nop
+    nop
+    nop
+    movs r6, #0        ; r6 = 0
+    and r6, r0, #0x0f  ; r6 = r0 & 0x0f
+    lsls r6, r6, #1    ; r6 <<= 1
     movs r7, #0
-    b .delayb
+    str r1, [r3, #0]   ; pin := hi
+    b .delayhigh2
     
-.delayb:
+.delayhigh2:
     adds r7, #1
-    cmp r7, #1
-    bne .delayb
-    b .gob
-    
-.gob:
-    lsrs r6, r6, #1     ; r6 >>= 1   C7
-    bne .justbit        ;            C8
-    
-    ; not just a bit - need new byte
+    cmp r7, r6         ;
+    bne .delayhigh2
+    str r1, [r2, #0]    ; pin := lo  C6
+    nop
+    nop
+    nop
+    nop
+    nop    
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
-.start:
-    movs r6, #0x80      ; reset mask C12
-    nop                 ;            C13
-
-.common:               ;             C13
-    str r1, [r2, #0]   ; pin := lo   C15
-    movs r7, #0
-    b .delayc
-
-.delayc:
-    adds r7, #1
-    cmp r7, #10
-    bne .delayc
-    b .goc
-
-.goc:
-    ; always re-load byte - it just fits with the cycles better this way
-    ldrb r0, [r4, #0]  ; r0 := *r4   C17
-    b .nextbit         ;             C20
-
-.justbit: ; C10
-    ; no nops, branch taken is already 3 cycles
-    b .common ; C13
+    b .loop
 
 .stop:    
-    str r1, [r2, #0]   ; pin := lo 
+    str r1, [r2, #0]   ; pin := lo
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
-
-
