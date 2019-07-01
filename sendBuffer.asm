@@ -38,7 +38,7 @@ sendBufferAsm:
 
 .delaya:
     adds r7, #1
-    cmp r7, #6         ; 2.4us
+    cmp r7, #8         ; 2.4us
     bne .delaya
     b .goa
 
@@ -53,7 +53,7 @@ sendBufferAsm:
     
 .delayb:
     adds r7, #1
-    cmp r7, #3
+    cmp r7, #2
     bne .delayb
     b .gob
     
@@ -76,7 +76,7 @@ sendBufferAsm:
 
 .delayc:
     adds r7, #1
-    cmp r7, #6
+    cmp r7, #8
     bne .delayc
     b .goc
 
