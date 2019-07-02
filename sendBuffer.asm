@@ -41,7 +41,7 @@ sendBufferAsm:
     
 .delay1:
     adds r7, #1
-    cmp r7, #20
+    cmp r7, #25
     bne .delay1
     b .databit
     
@@ -56,7 +56,7 @@ sendBufferAsm:
     
 .delay2:
     adds r7, #1
-    cmp r7, #20
+    cmp r7, #25
     bne .delay2
     b .nextbit
     
@@ -66,7 +66,7 @@ sendBufferAsm:
     
 .delay3:
     adds r7, #1
-    cmp r7, #20
+    cmp r7, #25
     bne .delay3
     b .nextbit
 
@@ -81,7 +81,7 @@ sendBufferAsm:
     
 .delay4:
     adds r7, #1
-    cmp r7, #20
+    cmp r7, #5
     bne .delay4
     b .nextbyte
     
@@ -92,7 +92,7 @@ sendBufferAsm:
     b .sendbyte
 
 .stop:    
-    str r1, [r3, #0]   ; pin := hi
+    str r1, [r2, #0]   ; pin := lo
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
