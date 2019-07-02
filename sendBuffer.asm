@@ -72,7 +72,7 @@ sendBufferAsm:
 
 .nextbit:
     cmp r6, #0x80
-    jne .setmask
+    bne .setmask
     b .stopbit
     
 .setmask:
