@@ -41,7 +41,7 @@ sendBufferAsm:
     
 .delay1:
     adds r7, #1
-    cmp r7, #27
+    cmp r7, #25
     bne .delay1
     b .databit
     
@@ -56,7 +56,7 @@ sendBufferAsm:
     
 .delay2:
     adds r7, #1
-    cmp r7, #26
+    cmp r7, #25
     bne .delay2
     b .nextbit
     
@@ -85,7 +85,7 @@ sendBufferAsm:
     
 .delay4:
     adds r7, #1
-    cmp r7, #26
+    cmp r7, #25
     bne .delay4
     
     adds r4, #1         ; r4++       C9
