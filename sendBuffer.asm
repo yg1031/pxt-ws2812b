@@ -15,7 +15,7 @@ sendBufferAsm:
     
     ; setup pin as digital
     mov r0, r6
-    movs r1, #0
+    movs r1, #1      ; pin := hi
     bl pins::digitalWritePin
     
     ; load pin address
@@ -28,69 +28,72 @@ sendBufferAsm:
     ldr r3, [r0, #12] ; r3-setaddr
     
     cpsid i ; disable irq
-
+    
+    str r1, [r3, #0]   ; pin := hi
     b .sendbyte
 
 .sendbyte:
-    ldrb r0, [r4, #0]
-    movs r6, r0
-    movs r7, #0xF0
-    ands r6, r7
-    lsrs r6, r6, #3
-    adds r6, #10
-    movs r7, #0
-    str r1, [r3, #0]
-    b .delayhigh1
+    ldrb r0, [r4, #0]   ; r0 = *r4
+    movs r6, #0x01      ; reset mask
     
-.delayhigh1:
-    adds r7, #1
-    cmp r7, r6
-    bne .delayhigh1
-    b .outputlow
-
-.outputlow:
+.startbit:
     str r1, [r2, #0]    ; pin := lo  C6
-    movs r7, #0
-    b .delaylow1
-
-.delaylow1:
-    adds r7, #1
-    cmp r7, #10
-    bne .delaylow1
-    b .lowbits
+    movs r7, 0
     
-.lowbits:
-    movs r6, r0
-    movs r7, #0x0F
-    ands r6, r7
-    lsls r6, r6, #1    ; r6 <<= 1
-    adds r6, #10
-    movs r7, #0
+.delay1:
+    adds r7, #1
+    cmp r7, #20
+    bne .delay1
+    b .databit
+    
+.databit:
+    tst r6, r0          ; r6 & r0
+    bne .bit1           ; if (r6 & r0 != 0)
+    b .bit0             ; else
+    
+.bit1:
     str r1, [r3, #0]   ; pin := hi
-    b .delayhigh2
+    movs r7, 0
     
-.delayhigh2:
+.delay2:
     adds r7, #1
-    cmp r7, r6         ;
-    bne .delayhigh2
-    str r1, [r2, #0]    ; pin := lo  C6
-    movs r7, #0
-    b .delaylow2
+    cmp r7, #20
+    bne .delay2
+    b .nextbit
+    
+.bit0:
+    str r1, [r2, #0]   ; pin := lo
+    movs r7, 0
+    
+.delay3:
+    adds r7, #1
+    cmp r7, #20
+    bne .delay3
+    b .nextbit
 
-.delaylow2:
+.nextbit:    
+    lsls r6, r6, #1    ; r6 <<= 1
+    bne .databit       ; if (r6 != 0)
+    b .stopbit
+    
+.stopbit:
+    str r1, [r3, #0]   ; pin := hi
+    movs r7, 0
+    
+.delay4:
     adds r7, #1
-    cmp r7, #10
-    bne .delaylow2
+    cmp r7, #20
+    bne .delay4
     b .nextbyte
-
-.nextbyte:    
+    
+.nextbyte:
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
     b .sendbyte
 
 .stop:    
-    str r1, [r2, #0]   ; pin := lo
+    str r1, [r3, #0]   ; pin := hi
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
