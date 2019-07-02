@@ -66,17 +66,28 @@ sendBufferAsm:
     
 .delay3:
     adds r7, #1
-    cmp r7, #26
+    cmp r7, #25
     bne .delay3
     b .nextbit
 
-.nextbit:    
-    lsls r6, r6, #1    ; r6 <<= 1
-    bne .databit       ; if (r6 != 0)
+.nextbit:
+    cmp r6, #0x80
+    jne .setmask
     b .stopbit
+    
+.setmask:
+    lsls r6, r6, #1    ; r6 <<= 1
+    b .databit       ; if (r6 != 0)
     
 .stopbit:
     str r1, [r3, #0]   ; pin := hi
+    movs r7, 0
+    
+.delay4:
+    adds r7, #1
+    cmp r7, #26
+    bne .delay4
+    
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
