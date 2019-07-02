@@ -15,7 +15,7 @@ sendBufferAsm:
     
     ; setup pin as digital
     mov r0, r6
-    movs r1, #0
+    movs r1, #1
     bl pins::digitalWritePin
     
     ; load pin address
@@ -36,12 +36,12 @@ sendBufferAsm:
     movs r6, #0x01      ; reset mask
     
 .startbit:
-    str r1, [r3, #0]    ; pin := hi  C6
+    str r1, [r2, #0]    ; pin := lo  C6
     movs r7, 0
     
 .delay1:
     adds r7, #1
-    cmp r7, #25
+    cmp r7, #27
     bne .delay1
     b .databit
     
@@ -56,7 +56,7 @@ sendBufferAsm:
     
 .delay2:
     adds r7, #1
-    cmp r7, #25
+    cmp r7, #26
     bne .delay2
     b .nextbit
     
@@ -66,7 +66,7 @@ sendBufferAsm:
     
 .delay3:
     adds r7, #1
-    cmp r7, #25
+    cmp r7, #26
     bne .delay3
     b .nextbit
 
@@ -76,23 +76,14 @@ sendBufferAsm:
     b .stopbit
     
 .stopbit:
-    str r1, [r2, #0]   ; pin := lo
-    movs r7, 0
-    
-.delay4:
-    adds r7, #1
-    cmp r7, #5
-    bne .delay4
-    b .nextbyte
-    
-.nextbyte:
+    str r1, [r3, #0]   ; pin := hi
     adds r4, #1         ; r4++       C9
     subs r5, #1         ; r5--       C10
     bcc .stop           ; if (r5<0) goto .stop  C11
     b .sendbyte
 
 .stop:    
-    str r1, [r2, #0]   ; pin := lo
+    str r1, [r3, #0]   ; pin := hi
     cpsie i            ; enable irq
 
     pop {r4,r5,r6,r7,pc}
